@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "ObsidianNotability",
+	"name": "ObsidianNotability",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
+	"description": "Recreating the basic notability workflow and functionality in obsidian",
 	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
+	"authorUrl": "https://github.com/leohoerdemann",
 	"fundingUrl": "https://obsidian.md/pricing",
 	"isDesktopOnly": false
 }
