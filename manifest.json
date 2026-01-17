@@ -1,6 +1,6 @@
 {
-	"id": "ObsidianNotability",
-	"name": "ObsidianNotability",
+	"id": "Nota",
+	"name": "Nota",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Recreating the basic notability workflow and functionality in obsidian",

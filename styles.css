@@ -1,13 +1,459 @@
-/*
+/* Nota Plugin Styles */
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+/* Make the view fill the entire workspace */
+.workspace-leaf-content[data-type="DrawingView"] {
+    padding: 0 !important;
+    overflow: hidden !important;
+}
 
-If your plugin does not need CSS, delete this file.
+.workspace-leaf-content[data-type="DrawingView"] .view-content {
+    padding: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
 
-*/
+/* Main view container */
+.nota-view {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-.view-action.highlighted {
-    background-color: rgb(255, 255, 255); /* Transparent gray highlight color */
-    color: black; /* Black text color */
+/* Main container for the nota */
+.nota-container {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Scroll container for pages */
+.nota-scroll-container {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    background: var(--background-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0;
+    box-sizing: border-box;
+    /* Smooth native scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Start hidden for smooth viewport restoration */
+    opacity: 0;
+    transition: opacity 0.10s ease-out;
+}
+
+.nota-scroll-container.nota-ready {
+    opacity: 1;
+}
+
+/* Obsidian-style scrollbars */
+.nota-scroll-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.nota-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.nota-scroll-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-bg);
+    border-radius: 5px;
+    border: 0px solid transparent;
+    background-clip: padding-box;
+}
+
+.nota-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-active-thumb-bg);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.nota-scroll-container::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Individual page container */
+.nota-page {
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 0px 0;
+    position: relative;
+    touch-action: none;
+    user-select: none;
+    flex-shrink: 0;
+    /* Prevent page from causing unwanted horizontal scroll */
+    max-width: calc(100% - 40px);
+}
+
+.nota-page:first-child {
+    margin-top: 40px;
+}
+
+.nota-page:last-child {
+    margin-bottom: 40px;
+}
+
+/* Page separator (the gray line between pages) */
+.nota-page::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 4px;
+    background-color: #999;
+    padding: 0 0 0 0;
+}
+
+.nota-page:last-child::after {
+    display: none;
+}
+
+/* Canvas styling */
+.nota-page canvas {
+    display: block;
+    padding: 0;
+    margin: 0;
+
+}
+
+/* Toolbar actions - More specific selectors for Nota view */
+.workspace-leaf-content[data-type="DrawingView"] .view-action {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.workspace-leaf-content[data-type="DrawingView"] .view-action.is-active,
+.workspace-leaf-content[data-type="DrawingView"] .clickable-icon.is-active {
+    background-color: var(--interactive-accent) !important;
+    color: var(--text-on-accent) !important;
+    box-shadow: 0 0 0 2px var(--interactive-accent-hover) !important;
+    border-radius: 4px !important;
+}
+
+/* Add bottom border indicator for active tool */
+.workspace-leaf-content[data-type="DrawingView"] .view-action.is-active::after,
+.workspace-leaf-content[data-type="DrawingView"] .clickable-icon.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 4px;
+    background-color: var(--interactive-accent);
+    border-radius: 2px;
+}
+
+.workspace-leaf-content[data-type="DrawingView"] .view-action:hover:not(.is-active) {
+    background-color: var(--interactive-hover) !important;
+}
+
+/* Extra visual feedback with data attribute */
+.workspace-leaf-content[data-type="DrawingView"] .view-action[data-active="true"],
+.workspace-leaf-content[data-type="DrawingView"] .clickable-icon[data-active="true"] {
+    font-weight: 600 !important;
+}
+
+/* Fallback for any view action anywhere */
+.view-action.is-active,
+.clickable-icon.is-active {
+    background-color: var(--interactive-accent) !important;
+    color: var(--text-on-accent) !important;
+    opacity: 1 !important;
+}
+
+/* Tool options panel */
+.nota-tool-options {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    background-color: var(--background-secondary);
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding: 10px;
+    z-index: 100;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nota-tool-options .setting-item {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nota-tool-options input[type="color"] {
+    width: 40px;
+    height: 30px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.nota-tool-options input[type="range"] {
+    width: 150px;
+}
+
+/* Selection box */
+.konvajs-content .selection-rect {
+    stroke: #0066ff;
+    stroke-width: 2;
+    stroke-dasharray: 5, 5;
+    fill: rgba(0, 102, 255, 0.1);
+}
+
+/* Text editing */
+.nota-text-editor {
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    border: 2px solid var(--interactive-accent);
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nota-text-editor textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: inherit;
+    background: transparent;
+}
+
+/* Loading indicator */
+.nota-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.2em;
+    color: var(--text-muted);
+}
+
+/* Transformer (selection handles) */
+.konvajs-content .transformer-anchor {
+    fill: white;
+    stroke: var(--interactive-accent);
+    stroke-width: 2;
+}
+
+/* Page background patterns */
+.nota-page.background-grid {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.nota-page.background-ruled {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 100% 30px;
+}
+
+.nota-page.background-dotted {
+    background-image: 
+        radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Zoom controls */
+.nota-zoom-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 5px;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    padding: 5px;
+    z-index: 100;
+}
+
+.nota-zoom-button {
+    padding: 5px 10px;
+    background-color: var(--interactive-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.nota-zoom-button:hover {
+    background-color: var(--interactive-hover);
+}
+
+.nota-zoom-level {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    color: var(--text-normal);
+}
+
+/* Scrollbar styling */
+.nota-scroll-container::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    padding: 0 0 0 0;
+}
+
+.nota-scroll-container::-webkit-scrollbar-track {
+    background: var(--background-secondary);
+}
+
+.nota-scroll-container::-webkit-scrollbar-thumb {
+    background: var(--background-modifier-border);
+    border-radius: 6px;
+}
+
+.nota-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Context menu additions */
+.menu-item.nota-export {
+    color: var(--interactive-accent);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .nota-page {
+        margin: 10px auto;
+    }
+    
+    .nota-tool-options {
+        flex-wrap: wrap;
+    }
+    
+    .nota-zoom-controls {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+/* Dark mode adjustments */
+.theme-dark .nota-page {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+.theme-dark .nota-scroll-container {
+    background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100px);
+}
+
+.theme-dark .nota-page::after {
+    background-color: #666;
+}
+
+/* Apple Pencil cursor */
+.nota-container.apple-pencil-mode {
+    cursor: crosshair;
+}
+
+.nota-container.hand-mode {
+    cursor: grab;
+}
+
+.nota-container.hand-mode:active {
+    cursor: grabbing;
+}
+
+.nota-container.eraser-mode {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="black" stroke-width="2"/></svg>') 12 12, auto;
+}
+
+/* Animation for adding pages */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nota-page.new {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Selection highlight */
+.konvajs-content .selected {
+    filter: drop-shadow(0 0 5px rgba(0, 102, 255, 0.5));
+}
+
+/* Drawing cursor indicators */
+.nota-container[data-tool="pen"] {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2" fill="black"/></svg>') 8 8, crosshair;
+}
+
+.nota-container[data-tool="highlighter"] {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="8" y="8" width="8" height="8" fill="yellow" opacity="0.3"/></svg>') 12 12, crosshair;
+}
+
+.nota-container[data-tool="text"] {
+    cursor: text;
+}
+
+.nota-container[data-tool="select"] {
+    cursor: default;
+}
+
+/* Page number indicators */
+.nota-page-number {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8em;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+/* Export progress indicator */
+.nota-export-progress {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.nota-export-progress-bar {
+    width: 300px;
+    height: 20px;
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.nota-export-progress-fill {
+    height: 100%;
+    background-color: var(--interactive-accent);
+    transition: width 0.3s ease;
 }

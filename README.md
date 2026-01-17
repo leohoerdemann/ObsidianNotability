@@ -1,94 +1,248 @@
-# Obsidian Sample Plugin
+# Obsidian Nota Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+A comprehensive note-taking plugin for Obsidian that recreates the functionality of Notability, GoodNotes, and other PDF annotation apps directly within Obsidian.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## ✨ Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+### Core Drawing Tools
+- ✏️ **Pen** - Draw with customizable colors and thickness
+- 🖍️ **Highlighter** - Semi-transparent highlighting with adjustable opacity
+- 🧹 **Eraser** - Remove unwanted strokes
+- ✋ **Hand** - Pan and navigate around the document
+- 📝 **Text** - Add and edit text boxes with markdown support
+- 🎯 **Selection** - Select, move, and resize drawn content
 
-## First time developing plugins?
+### Advanced Features
+- 🔷 **Shape Recognition** - Automatically snap hand-drawn shapes to perfect geometric forms (lines, rectangles, circles, triangles)
+- 📄 **Multi-page Support** - Create documents with multiple pages, just like a real notebook
+- 🎨 **Page Backgrounds** - Choose from solid colors, grid patterns, ruled lines, or dotted grids
+- 📏 **Multiple Page Sizes** - A4, A5, Letter, Legal, or Square formats
+- 🔍 **Zoom & Pan** - Smooth zooming with Ctrl+scroll and panning with the hand tool
+- 💾 **Auto-save** - Changes automatically saved every 5 seconds
+- 📱 **Touch Support** - Full support for touch input, including Apple Pencil
+- ⚡ **Performance Optimized** - Page streaming ensures smooth performance even with large documents
 
-Quick starting guide for new plugin devs:
+## 🚀 Installation
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+### From Obsidian Community Plugins (Coming Soon)
+1. Open Settings → Community Plugins
+2. Search for "Nota"
+3. Click Install
+4. Enable the plugin
 
-## Releasing new releases
+### Manual Installation
+1. Download the latest release from [Releases](https://github.com/yourusername/obsidian-nota/releases)
+2. Extract to `<vault>/.obsidian/plugins/ObsidianNotability/`
+3. Reload Obsidian
+4. Enable "Nota" in Settings → Community Plugins
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
-
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
-
-## Adding your plugin to the community plugin list
-
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+### Development Installation
+```bash
+cd <vault>/.obsidian/plugins
+git clone https://github.com/yourusername/obsidian-nota.git ObsidianNotability
+cd ObsidianNotability
+npm install
+npm run dev  # or npm run build for production
 ```
 
-If you have multiple URLs, you can also do:
+## 📖 Usage
+
+### Creating a New Nota
+- Click the **pen icon** in the left ribbon
+- Use Command Palette: **"Create New Nota"**
+- Right-click in file explorer → **New Nota**
+
+### Drawing Tools
+1. Select a tool from the toolbar at the top of the view
+2. Click the tool icon again to access settings (color, thickness, etc.)
+3. Draw on the canvas:
+   - **Pen/Highlighter**: Click and drag to draw
+   - **Eraser**: Click and drag to erase
+   - **Text**: Click to place a text box, double-click existing text to edit
+   - **Selection**: Draw a lasso around objects to select them
+   - **Hand**: Click and drag to pan the view
+
+### Shape Recognition
+1. Select the **Pen** tool
+2. Draw a shape (line, rectangle, circle, or triangle)
+3. **Hold** for ~0.5 seconds after finishing
+4. The shape will automatically snap to a perfect geometric form
+
+### Page Management
+- The last page is always blank and automatically creates a new one when you add content
+- Scroll naturally through pages
+- Pages dynamically load/unload for optimal performance
+
+### Keyboard Shortcuts
+- **Ctrl + Scroll** - Zoom in/out
+- **Ctrl + Z** - Undo (coming soon)
+- **Ctrl + Y** - Redo (coming soon)
+
+### Export Options
+1. Click the **three dots** (⋮) in the top-right
+2. Choose export format:
+   - Export as PDF
+   - Export as Images
+   - Export as Markdown (text only)
+
+## ⚙️ Settings
+
+Access settings via **Settings → Nota**
+
+### Page Settings
+- **Default Page Size**: Choose from A4, A5, Letter, Legal, or Square
+- **Default Background**: Solid, Grid, Ruled Lines, or Dotted
+- **Background Color**: Custom hex color for pages
+- **Grid Size**: Spacing for grid pattern (10-50px)
+- **Line Spacing**: Spacing for ruled lines (20-50px)
+
+### Tool Settings
+
+**Pen**
+- Color (hex value)
+- Thickness (1-10px)
+
+**Highlighter**
+- Color (hex value)
+- Thickness (10-40px)
+
+**Eraser**
+- Thickness (10-50px)
+
+**Text**
+- Font Size (10-48pt)
+- Font Family
+- Color (hex value)
+
+### Input
+- **Use Apple Pencil**: Enable special Apple Pencil features (hand tool activates when not using pencil)
+
+## 🗂️ File Format
+
+Nota files use the `.nota` extension and are stored as human-readable JSON:
 
 ```json
 {
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
+  "version": "1.0.0",
+  "pageSize": "A4",
+  "pages": [
+    {
+      "id": "page-1",
+      "width": 794,
+      "height": 1123,
+      "background": {
+        "type": "solid",
+        "color": "#ffffff"
+      },
+      "strokes": [],
+      "shapes": [],
+      "textElements": [],
+      "images": []
     }
+  ],
+  "settings": {
+    "pen": {...},
+    "highlighter": {...},
+    "eraser": {...},
+    "text": {...}
+  }
 }
 ```
 
-## API Documentation
+## 🛠️ Development
 
-See https://github.com/obsidianmd/obsidian-api
+### Tech Stack
+- **Konva.js** - High-performance canvas rendering
+- **pdf-lib** - PDF generation and parsing
+- **Tesseract.js** - OCR capabilities
+- **pptxgenjs** - PowerPoint file handling
+- **TypeScript** - Type-safe development
+
+### Building
+```bash
+npm install          # Install dependencies
+npm run dev          # Development with auto-rebuild
+npm run build        # Production build
+```
+
+### Project Structure
+```
+src/
+├── main.ts          # Plugin entry and settings
+├── view.ts          # Main view and UI
+├── types.ts         # TypeScript definitions
+├── tools.ts         # Drawing tools implementation
+├── pageManager.ts   # Page streaming system
+└── importExport.ts  # Import/export handlers
+```
+
+## 🐛 Troubleshooting
+
+**Plugin won't load**
+- Update to the latest Obsidian version
+- Verify all files are in the plugin folder
+- Disable and re-enable the plugin
+
+**Drawing is laggy**
+- Reduce zoom level
+- Close resource-intensive plugins
+- Restart Obsidian
+
+**Can't export to PDF**
+- Check browser console for errors
+- Ensure npm dependencies are installed
+- Try exporting as images instead
+
+## 🗺️ Roadmap
+
+### ✅ Completed
+- Core drawing functionality
+- Multiple tools with customization
+- Shape recognition
+- Page management with streaming
+- Auto-save
+- Settings panel
+- Basic export (PDF, Markdown)
+
+### 🚧 In Progress
+- Full PDF import/export with annotations
+- Enhanced image export
+- OCR integration
+- PowerPoint/Word import
+
+### 📋 Planned
+- Complete undo/redo system
+- Layer support
+- Audio recording
+- Collaborative editing
+- Note templates
+- Custom brush styles
+- Enhanced pressure sensitivity
+- Improved stylus support
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with tests
+4. Submit a pull request
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 🙏 Credits
+
+- Inspired by [Notability](https://notability.com/) and [GoodNotes](https://www.goodnotes.com/)
+- Notability .note format: [Julia Evans' reverse engineering](https://jvns.ca/blog/2018/03/31/reverse-engineering-notability-format/)
+- Built with the [Obsidian API](https://github.com/obsidianmd/obsidian-api)
+
+## 💬 Support
+
+- **Issues**: [GitHub Issues](https://github.com/yourusername/obsidian-nota/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/obsidian-nota/discussions)
+
+---
+
+Made with ❤️ for the Obsidian community
